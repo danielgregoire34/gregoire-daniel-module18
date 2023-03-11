@@ -10,7 +10,7 @@ getUser(req, res) {
 
 createUser(req, res) {
     User.create(req.body)
-    .then((user) => res.json(user))
+    .then((userData) => res.json(userData))
     .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
@@ -91,7 +91,7 @@ removeFriend(req, res) {
         !user
         ? res
             .status(404)
-            .json({ message: 'No student found with that ID :(' })
+            .json({ message: 'No friend found with that ID :(' })
         : res.json(user)
     )
     .catch((err) => res.status(500).json(err));
