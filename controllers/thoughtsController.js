@@ -14,11 +14,11 @@ const thoughtController = {
         .then((thoughtsData) => {
         return User.findOneAndUpdate(
                 { _id: req.body.userid },
-                { $push:{ thought: thoughtsData._id}},
+                { $push:{ thoughts: thoughtsData._id}},
                 { new: true }
                 )
         })
-        .then(user => res.json(user))
+        .then(userData => res.json(userData))
         .catch((err) => {
             console.log(err);
             return res.status(500).json(err);
@@ -54,7 +54,7 @@ const thoughtController = {
             ? res.status(404).json({ message: 'No such thought exists' })
             : Thought.findOneAndUpdate(
                 { _id: req.params.thoughtid },
-                { $pull: { thought: req.params.thoughtid } },
+                { $pull: { thoughts: req.params.thoughtid } },
                 { new: true }
                 )
         )
@@ -76,7 +76,7 @@ const thoughtController = {
         console.log(req.body);
         Thought.findOneAndUpdate(
         { _id: req.params.thoughtid },
-        { $addToSet: { reaction: req.body } },
+        { $addToSet: { reactions: req.body } },
         { runValidators: true, new: true }
         )
         .then((thought) =>
