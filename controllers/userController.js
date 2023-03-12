@@ -3,7 +3,7 @@ const { Thought, User } = require('../models');
 const userController = {
 
 getUser(req, res) {
-    User.find()
+    User.find({})
     .then((user) => res.json(user))
     .catch((err) => res.status(500).json(err));
 },
@@ -19,7 +19,7 @@ createUser(req, res) {
 
 updateUser(req, res) {
     User.findOneAndUpdate(
-    { _id: req.params.id },
+    { _id: req.params.userid },
     { $set: req.body },
     { runValidators: true, new: true }
     )
@@ -32,7 +32,7 @@ updateUser(req, res) {
 },
 
 getOneUser(req, res) {
-    User.findOne({ _id: req.params.id })
+    User.findOne({ _id: req.params.userid })
     .then((user) =>
         !user
         ? res.status(404).json({ message: 'No user with this id!' })
@@ -40,7 +40,7 @@ getOneUser(req, res) {
 },
 
 deleteUser(req, res) {
-    User.findOneAndRemove({ _id: req.params.id })
+    User.findOneAndRemove({ _id: req.params.userid })
     .then((user) =>
         !user
         ? res.status(404).json({ message: 'No such user exists' })
@@ -67,8 +67,8 @@ addFriend(req, res) {
     console.log('You just added a friend');
     console.log(req.body);
     User.findOneAndUpdate(
-    { _id: req.params.id },
-    { $addToSet: { thought: req.body } },
+    { _id: req.params.userid },
+    { $addToSet: { friends: req.params.friendId } },
     { runValidators: true, new: true }
     )
     .then((user) =>
@@ -83,7 +83,7 @@ addFriend(req, res) {
 
 removeFriend(req, res) {
     User.findOneAndUpdate(
-    { _id: req.params.id },
+    { _id: req.params.userid },
     { $pull: { friend: { friends: req.params.friendId } } },
     { runValidators: true, new: true }
     )

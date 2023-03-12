@@ -7,11 +7,11 @@ getOneThought,
 deleteThought,
 addReaction,
 removeReaction
-} = require('../../controllers/thoughtController');
+} = require('../../controllers/thoughtsController');
 
 router.route('/').get(getThought).post(createThought);
 
-router.route('/:id').put(updateThought).get(getOneThought).delete(deleteThought);
+router.route('/:thoughtid').put(updateThought).get(getOneThought).delete(deleteThought);
 
 router.route('/:id/:id/reactions/:reactionId').post(addReaction);
 

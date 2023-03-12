@@ -11,7 +11,7 @@ removeFriend
 
 router.route('/').get(getUser).post(createUser);
 
-router.route('/:id').put(updateUser).get(getOneUser).delete(deleteUser);
+router.route('/:userid').put(updateUser).get(getOneUser).delete(deleteUser);
 
 router.route('/:id/:id/friends/:friendId').post(addFriend);
 
